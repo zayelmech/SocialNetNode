@@ -1,0 +1,18 @@
+{
+  "name": "nodepractico",
+  "version": "1.0.0",
+  "description": "Curso practico de Node, mini red social",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "javascript",
+    "node"
+  ],
+  "author": "Abdiel Carreño",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
