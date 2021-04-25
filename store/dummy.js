@@ -15,7 +15,13 @@ async function get(tabla, id) {
 }
 
 async function upsert(tabla, data) {
-    db[collection].push(data);
+    if (!db[tabla]) {
+        console.log('Tabla vacia');
+        db[tabla] = [];
+    }
+    db[tabla].push(data);
+    console.log('Data added');
+    console.log(db);
 }
 
 async function remove(tabla, id) {
