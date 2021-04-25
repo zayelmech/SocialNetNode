@@ -16,6 +16,12 @@ const check = {
     own: function(req, owner) {
         const decoded = decodeHeader(req);
         console.log(decoded);
+
+        //comprobar si es o no propio
+        if (decoded.id !== owner) {
+            throw new Error('No tienes permisos para hacer esto');
+
+        }
     },
 }
 
@@ -23,7 +29,7 @@ function getToken(auth) {
     if (!auth) {
         throw new Error('No viene token');
     }
-    if (auth.indexOf('Bearer ' === -1)) {
+    if (auth.indexOf('Bearer ') === -1) {
         throw new Error('Formato invalido');
     }
     let token = auth.replace('Bearer ', '');
@@ -35,10 +41,11 @@ function decodeHeader(req) {
     const authorization = req.headers.authorization || '';
     const token = getToken(authorization);
     const decoded = verify(token);
-    req.user.decoded;
+    req.user = decoded;
     return decoded;
 }
 
 module.exports = {
     sign,
+    check,
 }

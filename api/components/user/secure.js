@@ -1,4 +1,4 @@
-const auth = require('../../../auth')
+const auth = require('../../../auth');
 
 
 module.exports = function checkAuth(action) {
@@ -7,11 +7,11 @@ module.exports = function checkAuth(action) {
             case 'update':
                 const owner = req.body.id;
                 auth.check.own(req, owner);
+                next();
                 break;
 
             default:
                 next();
-                break;
         }
     }
     return middleware;
