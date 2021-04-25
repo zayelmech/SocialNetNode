@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt');
+
 const auth = require('../../../auth')
 const TABLA = 'auth';
 module.exports = function(injectedStore) {
@@ -8,18 +10,22 @@ module.exports = function(injectedStore) {
 
     async function login(username, password) {
         const data = await store.query(TABLA, { username: username });
-        if (data.password === password) {
-            //generar token
-            return auth.sign(data);
+        return bcrypt.compare(password, data.password)
+            .then(sonIguales => {
+                if (sonIguales === true) {
+                    //generar token
+                    return auth.sign(data);
 
-        } else {
-            //error
-            throw new Error('Informacion invalidad: clave 7');
-        }
+                } else {
+                    //error
+                    throw new Error('Informacion invalidad: clave 7');
+                }
+            })
+
 
     }
 
-    function upsert(data) {
+    async function upsert(data) {
         const authData = {
             id: data.id,
 
@@ -29,7 +35,7 @@ module.exports = function(injectedStore) {
             authData.username = data.username
         }
         if (data.password) {
-            authData.password = data.password;
+            authData.password = await bcrypt.hash(data.password, 5); /*entre 5 y 10 es /el numero de veces recomendadas para ejecutar el algoritmo*/
         }
         return store.upsert(TABLA, authData);
     }
