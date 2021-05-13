@@ -14,7 +14,8 @@ module.exports = function(injectedStore) {
             .then(sonIguales => {
                 if (sonIguales === true) {
                     //generar token
-                    return auth.sign(data);
+                    //return auth.sign(data);
+                    return auth.sign(JSON.parse(JSON.stringify(data)));
 
                 } else {
                     //error
