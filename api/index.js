@@ -16,7 +16,7 @@ app.use('/api/user', user);
 app.use('/api/auth', auth);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
-app.use(errors); //es importante que sea el ultimo
+app.use(errors); //es importante que sea el ultimo de otra manera, se perderan las rutas
 app.listen(config.api.port, () => {
     console.log(`Api escuchando en el puerto ${config.api.port}`);
     console.log('Ejecucion exitosa');

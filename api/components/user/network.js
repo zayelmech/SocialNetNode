@@ -11,36 +11,34 @@ router.post('/', upsert);
 router.put('/', secure('update'), upsert);
 
 //internal functions
-function list(req, res) {
+function list(req, res, next) {
     Controller.list()
         .then((lista) => {
             response.success(req, res, lista, 200);
         })
-        .catch((e) => {
-            response.error(req, res, e.message, 500);
-        });
+        .catch(next);
+    /*
+    .catch((e) => {
+        response.error(req, res, e.message, 500);
+    });*/
 
 }
 
-function get(req, res) {
+function get(req, res, next) {
     Controller.get(req.params.id)
         .then((user) => {
             response.success(req, res, user, 200);
         })
-        .catch((e) => {
-            response.error(req, res, e.message, 500);
-        });
+        .catch(next);
 
 }
 
-function upsert(req, res) {
+function upsert(req, res, next) {
     Controller.upsert(req.body)
         .then((user) => {
             response.success(req, res, user, 201);
         })
-        .catch((e) => {
-            response.error(req, res, e.message, 500);
-        });
+        .catch(next);
 }
 
 
