@@ -25,6 +25,9 @@ const check = {
 
         }
     },
+    logged: function(req, owner) {
+        const decoded = decodeHeader(req);
+    },
 }
 
 function getToken(auth) {
